@@ -1,0 +1,51 @@
+require 'familysearch'
+
+# Ways to instantiate a client
+
+# This would start with an access_token and keep it for all requests.
+client = FamilySearch::Client.new :env => :production, :access_token => '{YOUR_ACCESS_TOKEN}', :logger => Logger.new(STDOUT)
+
+# Will probably support Basic Auth through this gem, so we would need the developer key for that
+client = FamilySearch::Client.new :host => 'https://sandbox.familysearch.org', :key => '{YOUR_DEV_KEY}', :logger => Logger.new(File.new('log/api.log'))
+client = FamilySearch::Client.new :host => 'http://localhost:5000', :key => '{YOUR_DEV_KEY}'
+
+# Requests would automatically include the following headers: 
+# Authorization: Bearer {access_token}
+# Accept: application/x-fs-v1+json
+# 
+# Responses would automatically be parsed into a smart object
+
+discovery = client.get :discovery
+me = client.get discovery['links']['current-user-person']['href']
+
+# Convenience methods like this #display method would allow you to easily access info 
+# buried deep into the object structure.
+me.display :name
+me.display :surname
+me.display :birth_date
+me.display :death_place
+
+# We would want an easy way to create new persons, relationships, etc.
+person = FamilySearch::Person.new
+person.add :name => 'Jimmy /Zimmerman/'
+person.add :birth => {:date => '14 Aug 2010', :place => 'Tuscarawas, Ohio, United States'}
+
+# Perhaps this could also be chained?
+person.add({:name => 'Jimmy /Zimmerman/'}).add({:birth => {:date => '14 Aug 2010', :place => 'Tuscarawas, Ohio, United States'}})
+
+# The client would support all HTTP methods
+client.post person
+
+# Or perhaps we would do something like this, because the person object
+# should know its own URL, so it could theoretically post to itself as long
+# as it had a way of accessing the client
+person.save
+
+# The client could accept full URLs
+client.get("https://familysearch.org/platform/tree/persons/KWQS-BBQ")
+
+# The client may support URL templates too
+client.get(:person,'KWQS-BBQ')
+
+# Perhaps we could allow lazy-loaded relationship traversal?
+person.relationships.parents.father.get
