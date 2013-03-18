@@ -26,9 +26,13 @@ Here's how to use it
     
     # For testing, you can use basic auth to get a session, 
     # Don't do this in your production web app. Use OAuth 2.0
-    client.basic_auth! 'api-user-1241', '1782'
+    client.basic_auth! 'your-username', 'your-password'
     
     me = client.get(client.discovery.links.current_user_person.href).body
+    
+    # The response object is a Rash object (Hashie extension) which allows you to traverse via dot notation.
+    # It also allows an _ to be placed at the end of elements you are traversing to guard against nil values.
+    me.persons[0].display_.name
 
 More documentation coming soon...
 
