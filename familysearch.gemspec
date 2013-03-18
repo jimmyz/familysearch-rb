@@ -14,16 +14,17 @@ Gem::Specification.new do |s|
   s.email = "jimmy.zimmerman@gmail.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
-    "README.rdoc"
+    "README.md"
   ]
   s.files = [
     ".document",
     ".rvmrc",
     "Gemfile",
     "LICENSE.txt",
-    "README.rdoc",
+    "README.md",
     "Rakefile",
     "VERSION",
+    "familysearch.gemspec",
     "lib/familysearch.rb",
     "lib/familysearch/client.rb",
     "spec/client_spec.rb",
