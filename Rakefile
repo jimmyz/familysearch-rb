@@ -13,7 +13,7 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "familysearch"
-  gem.homepage = "http://github.com/jimmyz/familysearch_rb"
+  gem.homepage = "http://github.com/jimmyz/familysearch-rb"
   gem.license = "MIT"
   gem.summary = %Q{A gem for the FamilySearch Platform.}
   gem.description = %Q{A gem for the FamilySearch Platform. Documentation for the FamilySearch Platform can be found at https://}
@@ -21,9 +21,6 @@ Jeweler::Tasks.new do |gem|
   gem.authors = ["Jimmy Zimmerman"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
   # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
-  gem.add_runtime_dependency 'faraday', "~> 0.8.4"
-  gem.add_runtime_dependency 'faraday_middleware', "~> 0.9.0"
-  gem.add_runtime_dependency 'multi_json', "~> 1.5.0"
   #  gem.add_development_dependency 'rspec', '> 1.2.3'
 end
 Jeweler::RubygemsDotOrgTasks.new

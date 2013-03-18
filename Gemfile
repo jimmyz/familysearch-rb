@@ -10,7 +10,7 @@ gem "rash", "~> 0.4.0"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
-group :development do
+group :development, :test do
   gem "rspec", "~> 2.13.0"
   gem "shoulda", "~> 3.3.2"
   gem "bundler", "~> 1.2.3"
