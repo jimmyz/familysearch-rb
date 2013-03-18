@@ -1,0 +1,17 @@
+* Implementation less complex than ruby-fs-stack so that other Ruby programmers can easily update.
+* Useful RDoc Documentation for objects.
+* Ability to maintain compatibility as GEDCOMX versions increment.
+* Tested with RSpec.
+* Support for Ruby 1.8.7, 1.9.3, JRuby, and Rubinius
+* Flexibility to access and use any aspect of the Platform without the need to write new gem code.
+  * This would be provided by raw get, put, post, delete methods against a URL and providing a hash of ruby code.
+* Follow HATEOAS principles.
+* Provide convenience methods for simplifying consumer code.
+* Logging should be configurable - 
+* Provide functionality for the following
+  * Reading the discovery resource
+  * Authentication (Basic)
+  * Maintaining sessions
+  * Following links from one resource to the next
+  * Reading, stitching, and traversing pedigree resources
+  
