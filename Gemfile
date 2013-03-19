@@ -5,8 +5,8 @@ source "https://rubygems.org"
 gem 'faraday', "~> 0.8.4"
 gem 'faraday_middleware', "~> 0.9.0"
 gem 'multi_json', "~> 1.5.0"
-gem "hashie", "~> 2.0.2"
-gem "rash", "~> 0.4.0"
+gem "hashie", "~> 1.2.0"
+gem "rash", "~> 0.3.2"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.

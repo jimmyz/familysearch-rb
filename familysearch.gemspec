@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jimmy Zimmerman"]
-  s.date = "2013-03-18"
+  s.date = "2013-03-19"
   s.description = "A gem for the FamilySearch Platform. Documentation for the FamilySearch Platform can be found at https://"
   s.email = "jimmy.zimmerman@gmail.com"
   s.extra_rdoc_files = [
@@ -49,8 +49,8 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<faraday>, ["~> 0.8.4"])
       s.add_runtime_dependency(%q<faraday_middleware>, ["~> 0.9.0"])
       s.add_runtime_dependency(%q<multi_json>, ["~> 1.5.0"])
-      s.add_runtime_dependency(%q<hashie>, ["~> 2.0.2"])
-      s.add_runtime_dependency(%q<rash>, ["~> 0.4.0"])
+      s.add_runtime_dependency(%q<hashie>, ["~> 1.2.0"])
+      s.add_runtime_dependency(%q<rash>, ["~> 0.3.2"])
       s.add_development_dependency(%q<rspec>, ["~> 2.13.0"])
       s.add_development_dependency(%q<shoulda>, ["~> 3.3.2"])
       s.add_development_dependency(%q<bundler>, ["~> 1.2.3"])
@@ -61,8 +61,8 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<faraday>, ["~> 0.8.4"])
       s.add_dependency(%q<faraday_middleware>, ["~> 0.9.0"])
       s.add_dependency(%q<multi_json>, ["~> 1.5.0"])
-      s.add_dependency(%q<hashie>, ["~> 2.0.2"])
-      s.add_dependency(%q<rash>, ["~> 0.4.0"])
+      s.add_dependency(%q<hashie>, ["~> 1.2.0"])
+      s.add_dependency(%q<rash>, ["~> 0.3.2"])
       s.add_dependency(%q<rspec>, ["~> 2.13.0"])
       s.add_dependency(%q<shoulda>, ["~> 3.3.2"])
       s.add_dependency(%q<bundler>, ["~> 1.2.3"])
@@ -74,8 +74,8 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<faraday>, ["~> 0.8.4"])
     s.add_dependency(%q<faraday_middleware>, ["~> 0.9.0"])
     s.add_dependency(%q<multi_json>, ["~> 1.5.0"])
-    s.add_dependency(%q<hashie>, ["~> 2.0.2"])
-    s.add_dependency(%q<rash>, ["~> 0.4.0"])
+    s.add_dependency(%q<hashie>, ["~> 1.2.0"])
+    s.add_dependency(%q<rash>, ["~> 0.3.2"])
     s.add_dependency(%q<rspec>, ["~> 2.13.0"])
     s.add_dependency(%q<shoulda>, ["~> 3.3.2"])
     s.add_dependency(%q<bundler>, ["~> 1.2.3"])
