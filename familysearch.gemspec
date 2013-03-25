@@ -4,7 +4,7 @@ require "familysearch/version"
 
 Gem::Specification.new do |s|
   s.name        = "familysearch"
-  s.version     = Familysearch::VERSION
+  s.version     = FamilySearch::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Jimmy Zimmerman"]
   s.email       = ["jimmy.zimmerman@gmail.com"]
