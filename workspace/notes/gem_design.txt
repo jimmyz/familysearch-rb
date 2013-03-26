@@ -1,0 +1,7 @@
+Gems:
+familysearch - contain the client for making http calls, discovery, and URL templates (parses JSON by default)
+familysearch-gedcomx - object model for parsing and serializing GedcomX (XML or JSON?)
+familysearch-oauth2 - an client for doing oauth authentication (non-omniauth option)
+
+Future:
+familysearch-client - Break this out to contain the client for making http calls, discovery, and URL templates

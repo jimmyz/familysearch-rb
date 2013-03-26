@@ -1,0 +1,5 @@
+Errors:
+
+FamilySearch::Error::BadCredentials
+FamilySearch::Error::NotAuthorized
+FamilySearch::Error::NotFound
