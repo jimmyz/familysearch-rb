@@ -145,6 +145,7 @@ describe FamilySearch::Client do
       @client
     end
     
+    # The following specs were put in place to record the VCR cassette so that I could develop on the road...
     it "should read the current user person" do
       VCR.use_cassette('current_user_person_read') do
         person = client.get client.discovery['links']['current-user-person']['href']
@@ -157,10 +158,10 @@ describe FamilySearch::Client do
       end
     end
     
-    it "does something" do
+    it "gets the persons-with-relationships resource" do
       VCR.use_cassette('person_with_relationship') do
         person = client.get 'https://sandbox.familysearch.org/platform/tree/persons-with-relationships?person=KWQX-52J'
       end
     end
-  end
+  end  
 end
