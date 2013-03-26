@@ -2,7 +2,7 @@ require 'faraday'
 require 'faraday_middleware'
 require 'forwardable'
 require 'familysearch/error'
-require 'familysearch/middleware/familysearch_errors'
+require 'familysearch/middleware'
 
 module FamilySearch
   class Client
@@ -36,8 +36,7 @@ module FamilySearch
       @agent = Faraday.new(@base_url) do |faraday|
         faraday.response :familysearch_errors
         faraday.response :logger, options[:logger] if options[:logger]
-        # faraday.response :rashify
-        faraday.response :json
+        faraday.response :multi_json
         faraday.response :follow_redirects, :limit => 3, :standards_compliant => true
         faraday.headers['Accept'] = 'application/x-fs-v1+json'
         faraday.authorization('Bearer',@access_token) if @access_token

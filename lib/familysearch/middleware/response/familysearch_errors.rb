@@ -1,7 +1,7 @@
 require 'faraday'
 
 module FamilySearch
-  module MiddleWare
+  module Middleware
     class RaiseErrors < Faraday::Response::RaiseError
       def on_complete(env)
         case env[:status]
@@ -16,4 +16,4 @@ module FamilySearch
   end
 end
 
-Faraday.register_middleware :response, :familysearch_errors => FamilySearch::MiddleWare::RaiseErrors
+Faraday.register_middleware :response, :familysearch_errors => FamilySearch::Middleware::RaiseErrors
