@@ -1,7 +1,8 @@
-require 'hashie'
 require 'faraday'
 require 'faraday_middleware'
 require 'forwardable'
+require 'familysearch/error'
+require 'familysearch/middleware/familysearch_errors'
 
 module FamilySearch
   class Client
@@ -33,8 +34,9 @@ module FamilySearch
       @environment = options[:environment] || :sandbox
       @base_url = options[:base_url] || ENV_CONF[@environment][:base_url]
       @agent = Faraday.new(@base_url) do |faraday|
+        faraday.response :familysearch_errors
         faraday.response :logger, options[:logger] if options[:logger]
-        faraday.response :rashify
+        # faraday.response :rashify
         faraday.response :json
         faraday.response :follow_redirects, :limit => 3, :standards_compliant => true
         faraday.headers['Accept'] = 'application/x-fs-v1+json'
@@ -47,12 +49,13 @@ module FamilySearch
       @discovery ||= get_discovery
     end
     
+    # raises FamilySearch::Error::BadCredentials if it cannot authenticate
     def basic_auth!(username,password,key=nil)
       self.discover!
       @key ||= key if key
       @agent.basic_auth username, password
-      response = @agent.get @discovery.links.fs_identity_v2_login.href, :dataFormat => 'application/json', :key => @key
-      @access_token = response.body.session.id
+      response = @agent.get @discovery['links']['fs-identity-v2-login']['href'], :dataFormat => 'application/json', :key => @key
+      @access_token = response.body['session']['id']
       @agent.authorization('Bearer',@access_token)
     end
     

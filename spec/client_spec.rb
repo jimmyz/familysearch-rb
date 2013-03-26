@@ -91,7 +91,6 @@ describe FamilySearch::Client do
     it "should make a request " do
       VCR.use_cassette('discovery') do
         client.discover!
-        client.discovery.links.fs_identity_v2_login.href.should == 'https://sandbox.familysearch.org/identity/v2/login'
         client.discovery['links']['fs-identity-v2-login']['href'].should == 'https://sandbox.familysearch.org/identity/v2/login'
       end
     end
@@ -126,6 +125,41 @@ describe FamilySearch::Client do
       VCR.use_cassette('discovery_auth') do
         client.agent.should_receive(:authorization).with('Bearer','USYS8B6B487A084AA3B3C027451E23D20D5E_nbci-045-034.d.usys.fsglobal.net').and_call_original
         client.basic_auth! 'api-user-1241', '1782'
+      end
+    end
+    
+    it "should raise an error if the username or password are incorrect" do
+      VCR.use_cassette('discovery_auth_wrong_creds') do
+        expect {client.basic_auth! 'api-user-1241', '1783' }.to raise_error(FamilySearch::Error::BadCredentials)
+      end
+    end
+  end
+  
+  describe "get" do
+    def client()
+      unless @client
+        @client = FamilySearch::Client.new(:key => 'WCQY-7J1Q-GKVV-7DNM-SQ5M-9Q5H-JX3H-CMJK' )
+        @client.discover!
+        @client.basic_auth! 'api-user-1241', '1782'
+      end
+      @client
+    end
+    
+    it "should read the current user person" do
+      VCR.use_cassette('current_user_person_read') do
+        person = client.get client.discovery['links']['current-user-person']['href']
+      end
+    end
+    
+    it "should read a person by ID" do
+      VCR.use_cassette('person_by_id') do
+        person = client.get 'https://sandbox.familysearch.org/platform/tree/persons/KWQX-52J'
+      end
+    end
+    
+    it "does something" do
+      VCR.use_cassette('person_with_relationship') do
+        person = client.get 'https://sandbox.familysearch.org/platform/tree/persons-with-relationships?person=KWQX-52J'
       end
     end
   end
