@@ -133,6 +133,18 @@ describe FamilySearch::Client do
         expect {client.basic_auth! 'api-user-1241', '1783' }.to raise_error(FamilySearch::Error::BadCredentials)
       end
     end
+    
+    it "should have some response objects on the exception that is raised" do
+      VCR.use_cassette('discovery_auth_wrong_creds') do
+        begin
+          client.basic_auth! 'api-user-1241', '1783'
+        rescue FamilySearch::Error::BadCredentials => bc
+          bc.response[:status].should == 401
+          bc.response[:headers].should be_kind_of(Hash)
+          bc.response[:body].should be_kind_of(Hash)
+        end
+      end
+    end
   end
   
   describe "get" do
