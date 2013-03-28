@@ -1,6 +1,7 @@
 require 'faraday'
 require 'faraday_middleware'
 require 'forwardable'
+require 'familysearch/url_template'
 require 'familysearch/error'
 require 'familysearch/middleware'
 
@@ -56,6 +57,13 @@ module FamilySearch
       response = @agent.get @discovery['links']['fs-identity-v2-login']['href'], :dataFormat => 'application/json', :key => @key
       @access_token = response.body['session']['id']
       @agent.authorization('Bearer',@access_token)
+    end
+    
+    def template(key)
+      self.discover!
+      k = key.to_s
+      template = @discovery['links'][key] || @discovery['links'][k+'-template'] || @discovery['links'][k+'-query']
+      FamilySearch::URLTemplate.new self, template
     end
     
     private

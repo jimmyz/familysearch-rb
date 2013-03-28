@@ -7,5 +7,9 @@ module FamilySearch
       end
     end
     class BadCredentials < ClientError; end
+    # Template Related Errors
+    class URLTemplateNotFound < StandardError; end
+    class MethodNotAllowed < StandardError; end
+    class TemplateValueNotFound < StandardError; end
   end
 end

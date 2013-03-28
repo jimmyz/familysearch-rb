@@ -175,5 +175,59 @@ describe FamilySearch::Client do
         person = client.get 'https://sandbox.familysearch.org/platform/tree/persons-with-relationships?person=KWQX-52J'
       end
     end
-  end  
+  end
+  
+  describe "template" do
+    def client()
+      unless @client
+        @client = FamilySearch::Client.new(:key => 'WCQY-7J1Q-GKVV-7DNM-SQ5M-9Q5H-JX3H-CMJK' )
+        @client.discover!
+        @client.basic_auth! 'api-user-1241', '1782'
+      end
+      @client
+    end
+    
+    it "should take a key as a string and return a FamilySearch::URLTemplate object" do
+      VCR.use_cassette('person_by_id') do
+        client.template('person-template').should be_instance_of(FamilySearch::URLTemplate)
+      end
+    end
+    
+    it "should raise an error if there is no template found for the key" do
+      VCR.use_cassette('person_by_id') do
+        expect {client.template('yodawg-template')}.to raise_error(FamilySearch::Error::URLTemplateNotFound)
+      end
+    end
+    
+    it "should allow you to take -template off of the key attribute" do
+      VCR.use_cassette('person_by_id') do
+        person_template = client.template('person')
+        person_template.should be_instance_of(FamilySearch::URLTemplate)
+        person_template.title.should == "Person"
+      end
+    end
+    
+    it "should allow you to take -query off of the key attribute" do
+      VCR.use_cassette('person_by_id') do
+        person_template = client.template('ancestry')
+        person_template.should be_instance_of(FamilySearch::URLTemplate)
+        person_template.title.should == "Ancestry"
+      end
+    end
+    
+    it "should allow you to use a symbol as the key attribute" do
+      VCR.use_cassette('person_by_id') do
+        person_template = client.template(:ancestry)
+        person_template.should be_instance_of(FamilySearch::URLTemplate)
+        person_template.title.should == "Ancestry"
+      end
+    end
+    
+    it "should allow you to make a call to a template and get a result" do
+      VCR.use_cassette('person_by_id') do
+        result = client.template('person').get 'pid' => 'KWQX-52J'
+        result.body.should be_kind_of(Hash)
+      end
+    end
+  end
 end

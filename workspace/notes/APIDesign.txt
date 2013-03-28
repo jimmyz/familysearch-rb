@@ -45,7 +45,7 @@ person.save
 client.get("https://familysearch.org/platform/tree/persons/KWQS-BBQ")
 
 # The client may support URL templates too
-client.get(:person,'KWQS-BBQ')
+client.template('person').get :pid => 'KWQS-BBQ'
 
 # Perhaps we could allow lazy-loaded relationship traversal?
 person.relationships.parents.father.get
