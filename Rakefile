@@ -1,3 +1,5 @@
+$:.push File.expand_path("../lib", __FILE__)
+require "familysearch/version"
 require 'bundler'
 Bundler::GemHelper.install_tasks
 
@@ -9,7 +11,7 @@ task :default => :spec
 
 require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
+  version = FamilySearch::VERSION
 
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title = "familysearch #{version}"
