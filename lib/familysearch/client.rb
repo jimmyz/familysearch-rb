@@ -5,6 +5,8 @@ require 'familysearch/url_template'
 require 'familysearch/error'
 require 'familysearch/middleware'
 
+# Namespace this gem functionality under FamilySearch. I realise it doesn't exactly follow gem conventions by CamelCasing FamilySearch,
+# but I'm just following FamilySearch branding (familysearch.org, not family_search.org and FamilySearch not Familysearch).
 module FamilySearch
   # FamilySearch::Client is the core of the +familysearch+ gem. It manages the HTTP requests to
   # the FamilySearch Platform. Under the covers, it is implemented using the wonderful Faraday ruby gem.

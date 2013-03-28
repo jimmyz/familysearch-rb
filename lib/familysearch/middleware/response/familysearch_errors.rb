@@ -1,8 +1,11 @@
 require 'faraday'
 
 module FamilySearch
+  # Middleware specific to the +familysearch+ gem
   module Middleware
+    # Handles the raising of errors within the Faraday call stack. 
     class RaiseErrors < Faraday::Response::RaiseError
+      # If a 400-600 error is raised by the HTTP call, raise it within the app.
       def on_complete(env)
         case env[:status]
         when 401
