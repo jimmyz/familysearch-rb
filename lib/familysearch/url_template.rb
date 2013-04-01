@@ -1,3 +1,4 @@
+require 'addressable/template'
 module FamilySearch
   # Used to make calls on templates that are exposed through the Discovery Resource.
   # 
@@ -82,9 +83,9 @@ module FamilySearch
     def get(template_values)
       raise FamilySearch::Error::MethodNotAllowed unless allow.include?('get')
       template_values = validate_values(template_values)
-      url = make_url(template_values)
-      params = make_params(template_values)
-      @client.get url, params
+      t = Addressable::Template.new(@template)
+      url = t.expand(template_values).to_s
+      @client.get url
     end
     
     private
@@ -106,27 +107,6 @@ module FamilySearch
         raise FamilySearch::Error::TemplateValueNotFound unless vals.include?(k.to_s)
       end
       stringified_hash
-    end
-    
-    def make_url(template_values)
-      url = @template.gsub(/\{\?[^}]*\}/,'')
-      template_values.each do |k,v|
-        to_replace = "{#{k}}"
-        url.gsub!(to_replace,v)
-      end
-      url
-    end
-    
-    def make_params(template_values)
-      to_remove = url_values
-      to_remove.each do |v|
-        template_values.delete(v)
-      end
-      template_values
-    end
-    
-    def url_values
-      @template.scan(/\{(\w*)\}/).flatten
     end
   end
 end
