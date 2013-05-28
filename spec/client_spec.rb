@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'familysearch/client'
+require 'familysearch'
 
 describe FamilySearch::Client do
   
@@ -226,7 +226,7 @@ describe FamilySearch::Client do
     it "should allow you to make a call to a template and get a result" do
       VCR.use_cassette('person_by_id') do
         result = client.template('person').get 'pid' => 'KWQX-52J'
-        result.body.should be_kind_of(Hash)
+        result.body.should be_instance_of(FamilySearch::Gedcomx::FamilySearch)
       end
     end
   end

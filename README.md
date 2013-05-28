@@ -8,7 +8,7 @@ You can install it from the commandline.
 
 Or add it to a Gemfile for use with Bundler
 
-    gem "familysearch", "~> 0.3.0 "
+    gem "familysearch", "~> 0.4.0 "
 
 
 ## Basic Usage
@@ -29,8 +29,17 @@ Here's how to use it
     response = client.get(client.discovery['links']['current-user-person']['href'])
     response.status #=> 200
 	
-	# The response contains a Hash object on the body attribute.
+	  # The response body contains a FamilySearch::Gedcomx::FamilySearch object.
+    # This is technically a Hash, so you could do the following
     response.body['persons'][0]['display']['name']
+    
+    # The FamilySearch::Gedcomx::FamilySearch object also provides convenience methods
+    # and the hash elements have method accessors
+    person = response.body.persons[0]
+    person.full_name #=> "Marshall P Felch"
+    person.surname #=> "Felch"
+    person.birth # => a FamilySearch::Gedcomx::Fact object
+
 
 ## Discovery Resource
 
@@ -60,6 +69,12 @@ The above code is equivalent to the following:
 
 	response = client.get 'https://sandbox.familysearch.org/platform/tree/persons/KWQX-52J'
 
+## FamilySearch::Gedcomx
+
+A separate `familysearch-gedcomx` gem is pulled in as a dependency for the `familysearch` gem. This provides a Ruby object structure that matches the [application/x-fs-v1+json](https://familysearch.org/developers/docs/api/fs_json) hypermedia type. It also provides convenience methods and graph (pedigree) traversal functionality.
+
+For more information visit the [familysearch-gedcomx](https://github.com/jimmyz/familysearch-gedcomx-rb) homepage.
+
 ## Faraday
 
 This gem depends upon the wonderful `faraday` gem for handling HTTP calls. One of the advantages of this is that you could possibly swap out underlying http libraries. Currently, it utilizes the Net::HTTP library, but in the future it could potentially support other libraries such as EventMachine's asynchronous http library.
@@ -73,12 +88,14 @@ This gem makes use of the awesome `multi_json` gem. This allows you to utilize f
 Next on the roadmap:
 
 * Support post, put, delete, head, etc. from the FamilySearch::URLTemplate objec. (currently only supports get)
-* Better object deserialization. Currently, everything is just a dumb Hash. I'd like to be able to allow an option to pass in another middleware for smarter objects (pershaps Hashie::Mash or Rash, or some sort of GedcomX model).
+* Better Faraday configuration options for the client.
+* Testing of more endpoints (search, match, etc.)
+* JSON serialization for put, post, etc.
 * More documentation examples.
 
 ## Bugs and Feature Requests
 
-Please file bug reports and 
+Please file bug reports and enhancement requests on [the issue tracker](https://github.com/jimmyz/familysearch-rb/issues).
 
 ## Copyright
 
