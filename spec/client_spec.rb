@@ -148,9 +148,9 @@ describe FamilySearch::Client do
   end
   
   describe "get" do
-    def client()
-      unless @client
-        @client = FamilySearch::Client.new(:key => 'WCQY-7J1Q-GKVV-7DNM-SQ5M-9Q5H-JX3H-CMJK' )
+    def client(refresh=false)
+      unless @client || refresh
+        @client = FamilySearch::Client.new(:key => 'WCQY-7J1Q-GKVV-7DNM-SQ5M-9Q5H-JX3H-CMJK')
         @client.discover!
         @client.basic_auth! 'api-user-1241', '1782'
       end
@@ -173,6 +173,21 @@ describe FamilySearch::Client do
     it "gets the persons-with-relationships resource" do
       VCR.use_cassette('person_with_relationship') do
         person = client.get 'https://sandbox.familysearch.org/platform/tree/persons-with-relationships?person=KWQX-52J'
+      end
+    end
+    
+    it "should return a FamilySearch::Gedcomx::Familysearch object response is of that mediatype" do
+      VCR.use_cassette('person_with_relationship') do
+        person_response = client.get 'https://sandbox.familysearch.org/platform/tree/persons-with-relationships?person=KWQX-52J'
+        person_response.body.should be_instance_of FamilySearch::Gedcomx::FamilySearch
+      end
+    end
+    
+    it "should return an AtomFeed object if it is of type application/x-gedcomx-atom+json" do
+      VCR.use_cassette('search') do
+        # application/x-fs-v1+json
+        person_response = client.get 'https://sandbox.familysearch.org/platform/tree/search?q=givenName:John surname:Smith gender:male'
+        person_response.body.should be_instance_of FamilySearch::Gedcomx::AtomFeed
       end
     end
   end

@@ -82,7 +82,7 @@ module FamilySearch
         faraday.response :gedcomx_parser
         faraday.response :multi_json
         faraday.response :follow_redirects, :limit => 3, :standards_compliant => true
-        faraday.headers['Accept'] = 'application/x-fs-v1+json'
+        faraday.headers['Accept'] = 'application/x-fs-v1+json,application/x-gedcomx-atom+json,application/json'
         faraday.authorization('Bearer',@access_token) if @access_token
         faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
       end
