@@ -4,42 +4,46 @@
 
 You can install it from the commandline.
 
-    gem install familysearch
+```console
+gem install familysearch
+```
 
 Or add it to a Gemfile for use with Bundler
 
-    gem "familysearch", "~> 0.4.0 "
-
+```console
+gem "familysearch", "~> 0.4.0 "
+```
 
 ## Basic Usage
 
 Here's how to use it
 
-    require 'rubygems'
-    require 'familysearch'
-    
-    # Instantiate a Client object
-    client = FamilySearch::Client.new :environment => :sandbox, :key => 'your-dev-key-here'
-        
-    # For testing, you can use basic auth to get a session, 
-    # Don't do this in your production web app. Use OAuth 2.0
-    client.basic_auth! 'your-username', 'your-password'
-    
-    # the client object has a get, post, put, delete, and head method
-    response = client.get(client.discovery['links']['current-user-person']['href'])
-    response.status #=> 200
-	
-	  # The response body contains a FamilySearch::Gedcomx::FamilySearch object.
-    # This is technically a Hash, so you could do the following
-    response.body['persons'][0]['display']['name']
-    
-    # The FamilySearch::Gedcomx::FamilySearch object also provides convenience methods
-    # and the hash elements have method accessors
-    person = response.body.persons[0]
-    person.full_name #=> "Marshall P Felch"
-    person.surname #=> "Felch"
-    person.birth # => a FamilySearch::Gedcomx::Fact object
+```ruby
+require 'rubygems'
+require 'familysearch'
 
+# Instantiate a Client object
+client = FamilySearch::Client.new :environment => :sandbox, :key => 'your-dev-key-here'
+
+# For testing, you can use basic auth to get a session,
+# Don't do this in your production web app. Use OAuth 2.0
+client.basic_auth! 'your-username', 'your-password'
+
+# the client object has a get, post, put, delete, and head method
+response = client.get(client.discovery['links']['current-user-person']['href'])
+response.status #=> 200
+
+# The response body contains a FamilySearch::Gedcomx::FamilySearch object.
+# This is technically a Hash, so you could do the following
+response.body['persons'][0]['display']['name']
+
+# The FamilySearch::Gedcomx::FamilySearch object also provides convenience methods
+# and the hash elements have method accessors
+person = response.body.persons[0]
+person.full_name #=> "Marshall P Felch"
+person.surname #=> "Felch"
+person.birth # => a FamilySearch::Gedcomx::Fact object
+```
 
 ## Discovery Resource
 
@@ -51,23 +55,29 @@ The Discovery Resource is intended to be utilized heavily by this gem. One of th
 
 The `familysearch` gem makes use of the templates exposed on the Discovery Resource. For example, the discovery resource exposes a person-template that looks like this:
 
-	"person-template" : {
-      "template" : "https://sandbox.familysearch.org/platform/tree/persons/{pid}{?access_token}",
-      "type" : "application/json,application/x-fs-v1+json,application/x-fs-v1+xml,application/x-gedcomx-v1+json,application/x-gedcomx-v1+xml,application/xml,text/html",
-      "accept" : "application/x-fs-v1+json,application/x-fs-v1+xml,application/x-gedcomx-v1+json,application/x-gedcomx-v1+xml",
-      "allow" : "HEAD,GET,POST,DELETE,GET,POST",
-      "title" : "Person"
-    }
- 
-To utilize this template, you can do the following from your `client` object. 
+```json
+"person-template" : {
+  "template" : "https://sandbox.familysearch.org/platform/tree/persons/{pid}{?access_token}",
+  "type" : "application/json,application/x-fs-v1+json,application/x-fs-v1+xml,application/x-gedcomx-v1+json,application/x-gedcomx-v1+xml,application/xml,text/html",
+  "accept" : "application/x-fs-v1+json,application/x-fs-v1+xml,application/x-gedcomx-v1+json,application/x-gedcomx-v1+xml",
+  "allow" : "HEAD,GET,POST,DELETE,GET,POST",
+  "title" : "Person"
+}
+```
 
-	response = client.template('person-template').get :pid => 'KWQS-BBQ'
+To utilize this template, you can do the following from your `client` object.
+
+```ruby
+response = client.template('person-template').get :pid => 'KWQS-BBQ'
+```
 
 You can also use `'person'`, or `:person` instead of 'person-template'. The client will still find the appropriate template.
 
 The above code is equivalent to the following:
 
-	response = client.get 'https://sandbox.familysearch.org/platform/tree/persons/KWQX-52J'
+```ruby
+response = client.get 'https://sandbox.familysearch.org/platform/tree/persons/KWQX-52J'
+```
 
 ## FamilySearch::Gedcomx
 
@@ -101,4 +111,3 @@ Please file bug reports and enhancement requests on [the issue tracker](https://
 
 Copyright (c) 2013 Jimmy Zimmerman. See LICENSE.txt for
 further details.
-
