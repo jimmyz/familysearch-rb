@@ -98,7 +98,7 @@ describe FamilySearch::Client do
   
   describe "basic_auth!" do
     def client()
-      @client ||= FamilySearch::Client.new(:key => 'WCQY-7J1Q-GKVV-7DNM-SQ5M-9Q5H-JX3H-CMJK' )
+      @client ||= FamilySearch::Client.new({:key => 'WCQY-7J1Q-GKVV-7DNM-SQ5M-9Q5H-JX3H-CMJK'} )
     end
     
     it "should call discover! if it hasn't already" do
@@ -117,13 +117,13 @@ describe FamilySearch::Client do
     it "should make a call to the fs-identity-v2-login with credentials and set the access_token" do
       VCR.use_cassette('discovery_auth') do
         client.basic_auth! 'api-user-1241', '1782'
-        client.access_token.should == 'USYS8B6B487A084AA3B3C027451E23D20D5E_nbci-045-034.d.usys.fsglobal.net'
+        client.access_token.should == 'USYS6A9AF546F6DF9A2D6BFC35E4CF2A4E84_idses-int01.a.fsglobal.net'
       end
     end
     
     it "should set the agent's authorization to Bearer with the access token" do
       VCR.use_cassette('discovery_auth') do
-        client.agent.should_receive(:authorization).with('Bearer','USYS8B6B487A084AA3B3C027451E23D20D5E_nbci-045-034.d.usys.fsglobal.net').and_call_original
+        client.agent.should_receive(:authorization).with('Bearer','USYS6A9AF546F6DF9A2D6BFC35E4CF2A4E84_idses-int01.a.fsglobal.net').and_call_original
         client.basic_auth! 'api-user-1241', '1782'
       end
     end
