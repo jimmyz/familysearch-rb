@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    familysearch (0.4.1)
+    familysearch (0.4.2)
       addressable (~> 2.3.3)
       familysearch-gedcomx (~> 1.0.2)
       faraday (~> 0.8.4)
