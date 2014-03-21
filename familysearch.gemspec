@@ -22,9 +22,11 @@ Gem::Specification.new do |s|
   s.add_dependency("multi_json", ["~> 1.0"])
   s.add_dependency("addressable", ["~> 2.3.3"])
   s.add_dependency("familysearch-gedcomx", ["~> 1.0.2"])
+
   s.add_development_dependency("rspec", ["~> 2.13.0"])
   s.add_development_dependency("shoulda", ["~> 3.3.2"])
   s.add_development_dependency("bundler", [">= 1.2.3"])
   s.add_development_dependency("vcr", ["~> 2.4.0"])
   s.add_development_dependency("webmock", ["~> 1.10.0"])
+  s.add_development_dependency("rake")
 end
