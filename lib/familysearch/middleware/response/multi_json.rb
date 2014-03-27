@@ -10,10 +10,10 @@ module FamilySearch
       dependency do
         require 'json' unless defined?(::JSON)
       end
-      
+
       # The method that has MultiJson parse the json string.
       def parse(body)
-        MultiJson.load(body)
+        MultiJson.load(body) unless body.nil?
       end
     end
   end
