@@ -1,4 +1,5 @@
 # familysearch gem
+[![Build Status](https://travis-ci.org/jimmyz/familysearch-rb.svg?branch=master)](https://travis-ci.org/jimmyz/familysearch-rb)
 
 ## Installation
 
