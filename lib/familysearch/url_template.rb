@@ -82,10 +82,14 @@ module FamilySearch
     #
     def get(template_values)
       raise FamilySearch::Error::MethodNotAllowed unless allow.include?('get')
+      etag            = template_values.delete(:etag)
       template_values = validate_values(template_values)
       t = Addressable::Template.new(@template)
       url = t.expand(template_values).to_s
-      @client.get url
+      @client.get do |req|
+        req.url(url)
+        req.headers['If-None-Match'] = etag if etag.present?
+      end
     end
 
     # Calls HTTP HEAD on the URL template. It takes the +template_values+ hash and merges the values into the template.
