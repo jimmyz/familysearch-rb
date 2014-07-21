@@ -86,10 +86,9 @@ module FamilySearch
       template_values = validate_values(template_values)
       t = Addressable::Template.new(@template)
       url = t.expand(template_values).to_s
-      @client.get do |req|
-        req.url(url)
-        req.headers['If-None-Match'] = etag if etag.present?
-      end
+      headers = {}
+      headers.merge!('If-None-Match' => etag) unless etag.nil?
+      @client.get(url, nil, headers)
     end
 
     # Calls HTTP HEAD on the URL template. It takes the +template_values+ hash and merges the values into the template.
@@ -129,6 +128,7 @@ module FamilySearch
     end
 
     private
+
     def value_array
       template_value_array = []
       values = @template.scan(/\{([^}]*)\}/).flatten

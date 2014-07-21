@@ -91,25 +91,35 @@ describe FamilySearch::URLTemplate do
 
     it "should call get on the client with the url and values on the querystring" do
       VCR.use_cassette('person_with_relationship') do
-        client.should_receive(:get).with('https://sandbox.familysearch.org/platform/tree/persons-with-relationships?person=KWQX-52J').and_call_original
+        client
+          .should_receive(:get)
+          .with('https://sandbox.familysearch.org/platform/tree/persons-with-relationships?person=KWQX-52J', nil, {})
+          .and_call_original
         template.get 'person' => 'KWQX-52J'
       end
     end
 
     it "should call get on the client with the url and no querystring if nothing needs to be called" do
       VCR.use_cassette('person_by_id') do
-        client.should_receive(:get).with('https://sandbox.familysearch.org/platform/tree/persons/KWQX-52J')
+        client
+          .should_receive(:get)
+          .with('https://sandbox.familysearch.org/platform/tree/persons/KWQX-52J', nil, {})
         person_template.get 'pid' => 'KWQX-52J'
       end
     end
 
     it "should accept symbols in the values hash" do
       VCR.use_cassette('person_with_relationship') do
-        client.should_receive(:get).with('https://sandbox.familysearch.org/platform/tree/persons-with-relationships?person=KWQX-52J').and_call_original
+        client
+          .should_receive(:get)
+          .with('https://sandbox.familysearch.org/platform/tree/persons-with-relationships?person=KWQX-52J', nil, {})
+          .and_call_original
         template.get :person => 'KWQX-52J'
       end
       VCR.use_cassette('person_by_id') do
-        client.should_receive(:get).with('https://sandbox.familysearch.org/platform/tree/persons/KWQX-52J')
+        client
+          .should_receive(:get)
+          .with('https://sandbox.familysearch.org/platform/tree/persons/KWQX-52J', nil, {})
         person_template.get :pid => 'KWQX-52J'
       end
     end
