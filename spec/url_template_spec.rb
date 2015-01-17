@@ -123,5 +123,15 @@ describe FamilySearch::URLTemplate do
         person_template.get :pid => 'KWQX-52J'
       end
     end
+
+    it 'should set correct header when etag parameter present' do
+      VCR.use_cassette('person_with_relationship') do
+        client
+          .should_receive(:get)
+          .with('https://sandbox.familysearch.org/platform/tree/persons-with-relationships?person=KWQX-52J', nil, {'If-None-Match' => 'abc'})
+          .and_call_original
+        template.get person: 'KWQX-52J', etag: 'abc'
+      end
+    end
   end
 end
