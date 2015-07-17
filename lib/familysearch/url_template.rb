@@ -82,10 +82,13 @@ module FamilySearch
     #
     def get(template_values)
       raise FamilySearch::Error::MethodNotAllowed unless allow.include?('get')
+      etag            = template_values.delete(:etag)
       template_values = validate_values(template_values)
       t = Addressable::Template.new(@template)
       url = t.expand(template_values).to_s
-      @client.get url
+      headers = {}
+      headers.merge!('If-None-Match' => etag) unless etag.nil?
+      @client.get(url, nil, headers)
     end
 
     # Calls HTTP HEAD on the URL template. It takes the +template_values+ hash and merges the values into the template.
@@ -125,6 +128,7 @@ module FamilySearch
     end
 
     private
+
     def value_array
       template_value_array = []
       values = @template.scan(/\{([^}]*)\}/).flatten
