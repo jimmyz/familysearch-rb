@@ -80,7 +80,7 @@ module FamilySearch
         faraday.response :familysearch_errors
         faraday.response :logger, options[:logger] if options[:logger]
         faraday.response :gedcomx_parser
-        faraday.response :multi_json
+        faraday.response :json, content_type: /\bjson$/
         faraday.response :follow_redirects, :limit => 3, :standards_compliant => true
         faraday.headers['Accept'] = 'application/x-fs-v1+json,application/x-gedcomx-atom+json,application/json'
         faraday.authorization('Bearer',@access_token) if @access_token

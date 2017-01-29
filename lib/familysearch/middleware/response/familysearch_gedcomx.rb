@@ -24,4 +24,4 @@ module FamilySearch
   end
 end
 
-Faraday.register_middleware :response, :gedcomx_parser => FamilySearch::Middleware::GedcomxParser
+Faraday::Response.register_middleware :response, :gedcomx_parser => FamilySearch::Middleware::GedcomxParser
