@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency("faraday", ["~> 0.8.4"])
   s.add_dependency("faraday_middleware", ["~> 0.9.0"])
   s.add_dependency("multi_json", ["~> 1.0"])
-  s.add_dependency("addressable", ["~> 2.3.3"])
+  s.add_dependency("addressable", ["~> 2.5.0"])
   s.add_dependency("familysearch-gedcomx", ["~> 1.0.2"])
 
   s.add_development_dependency("rspec", ["~> 2.99.0"])
